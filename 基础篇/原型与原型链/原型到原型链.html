@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>原型到原型链</title>
+  </head>
+  <body>
+    <script>
+      // 我们先使用构造函数创建一个对象
+      function Person() {}
+      let person = new Person();
+      person.name = "John";
+      console.log(person.name);
+      // 在这个例子中，Person就是一个构造函数，我们使用new创建了一个实例对象
+      // prototype
+      /*
+      每个函数都有一个prototype属性，就是我们经常在各种例子中看到的那个prototype，比如
+      */
+      // function Person()
+      // 虽然写在注释里，但是你要注意
+      // prototype是函数对象才会有的属性
+      Person.prototype.name = "John";
+
+      let person1 = new Person();
+      let person2 = new Person();
+      console.log(person1.name); //John
+      console.log(person2.names); //John
+
+      /* 
+        那么这个函数的prototype属性到底指向的是什么？这个函数的原型吗？
+      */
+      /* 
+      每个函数都有一个prototype属性，它默认执行一个Object空对象（原型对象）
+      原型对象上有一个属性constructor，它指向函数对象
+    */
+      console.log(Person.prototype.constructor === Person); // true
+
+      console.log(person1.prototype); // undefined 实例对象没有显示原型
+
+      //  名词：prototype 显示原型对象 __proto__/[[prototype]] 隐式原型对象
+
+      console.log(Person.prototype === person1.__proto__); // true
+
+      // 也就是实例对象的隐式原型属性和构造函数的显示原型属性指向同一块区域
+
+      // 最关键的一句，也是前期看图最容易不懂的点
+      // 所有函数的__proto__ ,都指向Function的prototype
+      /* 
+      
+        因为所有的函数都是 new Function 而来的比如
+          * var Person = new Function()  正常是这样写 Functino Person(){ }
+      */
+      // 包括 Function的__proto__ 也指向 Function的prototype 因为
+      // * Function = new Functino()
+    </script>
+  </body>
+</html>
