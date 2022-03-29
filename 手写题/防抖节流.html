@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>防抖节流</title>
+</head>
+<style>
+
+
+    main {
+        background: #000;
+        width: 300px;
+        height: 300px;
+        margin: auto;
+        color: aliceblue;
+        font-size: 30px;
+        text-align: center;
+        font-weight: bold;
+        line-height: 300px;
+    }
+</style>
+<body>
+<main id="main">
+</main>
+<script>
+    function debounce(fn, wait) {
+        let timer = null
+        return function () {
+            if (timer) clearTimeout(timer)
+            timer = setTimeout(() => {
+                fn.call(this, arguments)
+            }, wait)
+        };
+    }
+
+    function throttle(fn, wait = 2000) {
+        let initTime = 0
+        return function () {
+            let curTime = new Date()
+            if (curTime - initTime > wait) {
+                fn.call(this, arguments)
+                initTime = curTime
+            }
+        }
+    }
+
+    // document.onmousemove = debounce(sayHi)
+    document.onmousemove = throttle(sayHi)
+    let timeFlag = 1
+
+    function sayHi() {
+        document.getElementById('main').innerText = timeFlag++
+    }
+
+</script>
+</body>
+</html>
