@@ -11,11 +11,22 @@
       /* 
         Object.defineProperty() 
       */
-      var obj = {};
-      Object.defineProperty(obj, "a", {
-        value: "12",
-      });
-         
+      //对象类型调用walk方法，遍历data中的每一个属性，监听数据的变化
+      function walk(obj) {
+        const keys = Object.keys(obj);
+        for (let i = 0; i < keys.length; i++) {
+          defineReactive(obj, keys[i]);
+        }
+      }
+
+      function defineReactive(obj,key,val) {
+        const dep = new Dep()
+        Object.defineProperty(obj,key,{
+          get() {
+            const value = val
+          }
+        })
+      }
     </script>
   </body>
 </html>
