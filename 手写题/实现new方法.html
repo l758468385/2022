@@ -1,64 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-    />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-  </head>
-  <body>
-    <script>
-      /*
-       * 创建一个空对象
-       * 链接到原型
-       * 绑定this对象
-       * 返回新对象
-       * */
 
-      //   function createNew() {
-      //     let obj = {};
-      //     let constructor = [].shift.call(arguments);
-      //     obj.__proto__ = constructor.prototype;
-      //     let result = constructor.apply(obj, arguments);
-      //     return typeof result === "object" ? result : obj;
-      //   }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
 
-      //   function People(name, age) {
-      //     this.name = name;
-      //     this.age = age;
-      //   }
+<body>
+  <script>
+    /*
+     * 创建一个空对象
+     * 链接到原型
+     * 绑定this对象
+     * 返回新对象
+     * */
 
-      //   let people = createNew(People, "Bob", 25);
+    //   function createNew() {
+    //     let obj = {};
+    //     let constructor = [].shift.call(arguments);
+    //     obj.__proto__ = constructor.prototype;
+    //     let result = constructor.apply(obj, arguments);
+    //     return typeof result === "object" ? result : obj;
+    //   }
 
-      //   console.log(people);
-      //   console.log(people.name);
-      //   console.log(people.age);
+    //   function People(name, age) {
+    //     this.name = name;
+    //     this.age = age;
+    //   }
 
-      function Dog(name, word) {
-        this.name = name;
-        this.sayHello = function () {
-          console.log(word);
-        };
-      }
+    //   let people = createNew(People, "Bob", 25);
 
-      function createNew() {
-        let obj = {};
-        let constructor = [].shift.call(arguments);
-        obj.__proto__ = constructor.prototype;
-        let res = constructor.apply(obj, arguments);
-        if (res instanceof Object) {
-          return res;
-        } else {
-          return obj;
-        }
-        // return obj;
-      }
+    //   console.log(people);
+    //   console.log(people.name);
+    //   console.log(people.age);
 
-      let dog = createNew(Dog, "xiaobai", "旺旺旺");
-      console.log(dog);
-    </script>
-  </body>
+    function Dog(name, word) {
+      this.name = name;
+      this.sayHello = function () {
+        console.log(word);
+      };
+    }
+
+    function createNew() {
+      let obj = {};
+      let constructor = [].shift.call(arguments);
+      obj.__proto__ = constructor.prototype;
+      let res = constructor.apply(obj, arguments);
+      return typeof res === 'object' ? res : obj
+      // return obj;
+    }
+
+    let dog = createNew(Dog, "xiaobai", "旺旺旺");
+    console.log(dog);
+  </script>
+</body>
+
 </html>
