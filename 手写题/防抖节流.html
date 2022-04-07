@@ -1,116 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>防抖节流</title>
-  </head>
-  <style>
-    main {
-      background: #000;
-      width: 300px;
-      height: 300px;
-      margin: auto;
-      color: aliceblue;
-      font-size: 30px;
-      text-align: center;
-      font-weight: bold;
-      line-height: 300px;
+
+<head>
+  <meta charset="UTF-8" />
+  <title>防抖节流</title>
+</head>
+<style>
+  main {
+    background: #000;
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    color: aliceblue;
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+    line-height: 300px;
+  }
+</style>
+
+<body>
+  <main id="main"></main>
+  <script>
+    let num = 0;
+    const main = document.getElementById("main");
+    main.onmousemove = throttle(handleMove, 500);
+
+    /*
+     *
+     * 防抖函数
+     * */
+    function debounce(fn, wait) {
+      let timer = null;
+      return function () {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          fn.apply(this, arguments);
+        }, wait);
+      };
     }
-  </style>
-  <body>
-    <main id="main"></main>
-    <script>
-      let num = 0;
-      const main = document.getElementById("main");
-      main.onmousemove = throttle(handleMove, 500);
 
-      /*
-       *
-       * 防抖函数
-       * */
-      function debounce(fn, wait) {
-        let timer = null;
-        return function () {
-          if (timer) clearTimeout(timer);
-          timer = setTimeout(() => {
-            fn.call(this, arguments);
-          }, wait);
-        };
-      }
-
-      /*
-       * 节流函数
-       * */
-      function throttle(fn, wait) {
-        let initTime = 0;
-        return function () {
-          let curTime = new Date();
-          if (curTime - initTime > wait) {
-            fn.call(this, arguments);
-            initTime = curTime;
-          }
-        };
-      }
-
-      function handleMove() {
-        main.innerText = num++;
-      }
-
-      /*
-       *   深拷贝
-       * */
-      function deepClone(obj) {
-        if ([false, undefined, NaN].includes(obj)) return obj;
-        if (typeof obj !== "object" && typeof obj !== "function") {
-          return obj;
+    /*
+     * 节流函数
+     * */
+    function throttle(fn, wait) {
+      let initTime = 0;
+      return function () {
+        let curTime = new Date();
+        if (curTime - initTime > wait) {
+          fn.call(this, arguments);
+          initTime = curTime;
         }
+      };
+    }
 
-        let newObj = Array.isArray(obj) ? [] : {};
-        for (const key in obj) {
-          if (obj.hasOwnProperty(key)) {
-            newObj[key] =
-              typeof obj === "object" ? deepClone(obj[key]) : obj[key];
-          }
+    function handleMove() {
+      main.innerText = num++;
+    }
+
+    /*
+     *   深拷贝
+     * */
+    function deepClone(obj) {
+      if ([false, undefined, NaN].includes(obj)) return obj;
+      if (typeof obj !== "object" && typeof obj !== "function") {
+        return obj;
+      }
+
+      let newObj = Array.isArray(obj) ? [] : {};
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          newObj[key] =
+            typeof obj === "object" ? deepClone(obj[key]) : obj[key];
         }
-        return newObj;
       }
+      return newObj;
+    }
 
-      /*
-       * 数组去重
-       * */
-      // 1.set
-      let arr = [1, 1, 2, 3, 4, 3, 4];
+    /*
+     * 数组去重
+     * */
+    // 1.set
+    let arr = [1, 1, 2, 3, 4, 3, 4];
 
-      function uni1(arr) {
-        return Array.from(new Set(arr));
-      }
+    function uni1(arr) {
+      return Array.from(new Set(arr));
+    }
 
-      console.log(uni1(arr));
+    console.log(uni1(arr));
 
-      // 2,indexof 或者include
-      function uni2(arr) {
-        let newArr = [];
-        arr.forEach((item, index) => {
-          // if (!newArr.includes(item)) {
-          //     newArr.push(item)
-          // }
-          if (newArr.indexOf(item) === -1) {
-            newArr.push(item);
-          }
-        });
-        return newArr;
-      }
+    // 2,indexof 或者include
+    function uni2(arr) {
+      let newArr = [];
+      arr.forEach((item, index) => {
+        // if (!newArr.includes(item)) {
+        //     newArr.push(item)
+        // }
+        if (newArr.indexOf(item) === -1) {
+          newArr.push(item);
+        }
+      });
+      return newArr;
+    }
 
-      // 3.利用filter
-      function uni3(arr) {
-        return arr.filter((item, index, arr) => {
-          return arr.indexOf(item) === index;
-        });
-      }
+    // 3.利用filter
+    function uni3(arr) {
+      return arr.filter((item, index, arr) => {
+        return arr.indexOf(item) === index;
+      });
+    }
 
-      console.log(uni1(arr));
-      console.log(uni2(arr));
-      console.log(uni3(arr));
-    </script>
-  </body>
+    console.log(uni1(arr));
+    console.log(uni2(arr));
+    console.log(uni3(arr));
+  </script>
+</body>
+
 </html>
